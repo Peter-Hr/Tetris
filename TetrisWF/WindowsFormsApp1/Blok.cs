@@ -42,7 +42,7 @@ namespace Ttrs
             offset.RowOffset += rowsToMove;
             offset.ColumnOffset += columnsToMove;
         }
-        public Reset()
+        public void Reset()
         {
             rotationState = 0;
             offset.RowOffset = StartOffset.RowOffset;
