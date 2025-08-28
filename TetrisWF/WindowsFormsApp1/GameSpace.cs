@@ -41,7 +41,7 @@ namespace Ttrs
         {
             for (int c = 0; c < Columns; c++)
             {
-                if(grid[r, c] == 1) { return false; }
+                if(grid[r, c] != 0) { return false; }
             }
             return true;
         }
