@@ -23,6 +23,9 @@ namespace Ttrs
             renderer = new Renderer(engine, 30);
             
             this.DoubleBuffered = true;
+            this.KeyPreview = true;
+            this.KeyDown += MoveFunction;
+            
 
             var timer = new Timer();
             timer.Interval = 500;
@@ -30,9 +33,8 @@ namespace Ttrs
             {
                 if (!engine.GameOver)
                 {
-                    Console.WriteLine("Game not Over!");
                     engine.MoveBlokDown();
-                    this.Invalidate(); // prekresli formulár
+                    this.Invalidate();
                 }
             };
             timer.Start();
@@ -42,5 +44,24 @@ namespace Ttrs
             base.OnPaint(e);
             renderer.Draw(e.Graphics);
         }
+        private void MoveFunction(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Down:
+                    engine.RotateCWIfPossible();
+                    break;
+                case Keys.Left:
+                    engine.MoveLeftIfPossible();
+                    break;
+                case Keys.Right:
+                    engine.MoveRightIfPossible();
+                    break;
+                case Keys.Up:
+                    engine.RotateCCWIfPossible();
+                    break;
+            }
+        }
+
     }
 }
