@@ -1,11 +1,12 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms.VisualStyles;
 
 namespace Ttrs
 {
     internal class Renderer
     {
         private readonly GameEngine engine;
-        private readonly int cellSize;
 
         private static readonly Color[] blockColors = new Color[]
         {
@@ -19,23 +20,32 @@ namespace Ttrs
                     Color.Red          // 7 = Z
         };
 
-        public Renderer(GameEngine engine, int cellSize)
+        public Renderer(GameEngine engine)
         {
             this.engine = engine;
-            this.cellSize = cellSize;
         }   
-        public void Draw(Graphics g)
+        public void Draw(Graphics g, Size clientSize)
         {
+            int cellWidth = clientSize.Width / engine.GameSpace.Columns;
+            int cellHeight = clientSize.Height / engine.GameSpace.Rows;
+            int cellSize = Math.Min(cellWidth, cellHeight);
+            int ttrsWidth = engine.GameSpace.Columns * cellSize;
+            int ttrsHeight = engine.GameSpace.Rows * cellSize;
+            int offsetX = (clientSize.Width - ttrsWidth) / 2;
+            int offsetY = (clientSize.Height - ttrsHeight) / 2;
+            g.FillRectangle(Brushes.Black, offsetX, offsetY, ttrsWidth, ttrsHeight);
+
             using (var Pen = new Pen(Color.Purple,1))
             {
                 for (int r = 0;  r < engine.GameSpace.Rows; r++)
                 {
                     for(int c=0;  c < engine.GameSpace.Columns; c++)
                     {
-                        g.DrawRectangle(Pen,c * cellSize,r*cellSize,cellSize,cellSize);
+                        g.DrawRectangle(Pen,offsetX + c * cellSize,offsetY + r*cellSize,cellSize,cellSize);
                     }
                 }
             }
+
             for (int r = 0; r < engine.GameSpace.Rows; r++)
             {
                 for (int c = 0; c < engine.GameSpace.Columns; c++)
@@ -43,7 +53,7 @@ namespace Ttrs
                     int id = engine.GameSpace[r, c];
                     if (id != 0)
                     {
-                        DrawCell(g, r, c, blockColors[id]);
+                        DrawCell(g, r, c, blockColors[id], offsetX, offsetY, cellSize);
                     }
                 }
             }
@@ -51,13 +61,13 @@ namespace Ttrs
             {
                 foreach (var pos in engine.CurrentBlok.TilePos())
                 {
-                    DrawCell(g, pos.RowOffset, pos.ColumnOffset, blockColors[engine.CurrentBlok.Id]);
+                    DrawCell(g, pos.RowOffset, pos.ColumnOffset, blockColors[engine.CurrentBlok.Id], offsetX,offsetY, cellSize);
                 }
             }
         }
-        private void DrawCell(Graphics g, int row, int col, Color color)
+        private void DrawCell(Graphics g, int row, int col, Color color, int ofsetX, int ofsetY, int cellSize)
         {
-            Rectangle rect = new Rectangle(col * cellSize, row * cellSize, cellSize, cellSize);
+            Rectangle rect = new Rectangle(ofsetX + col * cellSize,ofsetY + row * cellSize, cellSize, cellSize);
             using (var brush = new SolidBrush(color))
             {
                 g.FillRectangle(brush, rect);

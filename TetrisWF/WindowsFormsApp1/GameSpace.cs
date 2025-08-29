@@ -7,6 +7,7 @@ namespace Ttrs
         private readonly int[,] grid;
         public int Rows { get; }
         public int Columns { get; }
+        public int TotalScore = 0;
 
         public GameSpace(int rows, int columns)
         {
@@ -36,7 +37,7 @@ namespace Ttrs
                 { return false; }
             }
             return true;
-        }
+        }   
         public bool IsRowEmpty(int r)
         {
             for (int c = 0; c < Columns; c++)
@@ -67,6 +68,7 @@ namespace Ttrs
                 if (IsRowFull(r))
                 {
                     cleared++;
+                    TotalScore++;
                     ClearRow(r);
                 }
                 else if (cleared > 0)
@@ -74,6 +76,17 @@ namespace Ttrs
             }
             return cleared;
         }
+        public void gridReset()
+        {
+            for(int r = 0; r < Rows; r++)
+            {
+                for(int c = 0; c < Columns; c++)
+                {
+                    grid[r, c] = 0;
+                }
+            }
+        }
+
 
     }
 }

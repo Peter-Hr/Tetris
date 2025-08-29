@@ -55,10 +55,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GameEngine.cs" />
+    <Compile Include="GameOverScreen.cs" />
     <Compile Include="GameSpace.cs" />
     <Compile Include="IBlok.cs" />
     <Compile Include="JBlok.cs" />
     <Compile Include="LBlok.cs" />
+    <Compile Include="MainMenu.cs" />
     <Compile Include="OBlok.cs" />
     <Compile Include="Pos.cs" />
     <Compile Include="Program.cs" />

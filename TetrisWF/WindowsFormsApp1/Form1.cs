@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.AxHost;
 
 namespace Ttrs
 
@@ -15,23 +16,36 @@ namespace Ttrs
     {
         private readonly GameEngine engine;
         private readonly Renderer renderer;
+        private readonly MainMenu mainMenu;
+        private readonly GameOverScreen gameOverScreen;
+        public enum GameState
+        {
+            MainMenu,
+            Playing,
+            GameOver
+        }
+        private GameState state;
 
         public Form1()
         {
             InitializeComponent();
             engine = new GameEngine();
-            renderer = new Renderer(engine, 30);
+            renderer = new Renderer(engine);
+            mainMenu = new MainMenu();
+            gameOverScreen = new GameOverScreen();
             
             this.DoubleBuffered = true;
             this.KeyPreview = true;
             this.KeyDown += MoveFunction;
-            
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+
+            state = GameState.MainMenu;
 
             var timer = new Timer();
             timer.Interval = 500;
             timer.Tick += (s, e) =>
             {
-                if (!engine.GameOver)
+                if (state == GameState.Playing && !engine.GameOver)
                 {
                     engine.MoveBlokDown();
                     this.Invalidate();
@@ -42,10 +56,44 @@ namespace Ttrs
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            renderer.Draw(e.Graphics);
+            if (state == GameState.MainMenu)
+            {
+                mainMenu.Draw(e.Graphics, this.ClientSize);
+                this.Invalidate();
+            }
+            else if (state == GameState.Playing)
+            {
+                renderer.Draw(e.Graphics, this.ClientSize);
+                if (engine.GameOver)
+                {
+                    state = GameState.GameOver;
+                    this.Invalidate();
+                }
+            }
+            else if (state == GameState.GameOver)
+            {
+                gameOverScreen.Draw(e.Graphics, this.ClientSize);
+                this.Invalidate();
+            }
         }
         private void MoveFunction(object sender, KeyEventArgs e)
+
         {
+            if (state == GameState.MainMenu && e.KeyCode == Keys.Enter)
+            {
+                state = GameState.Playing;
+                engine.EngineReset(); // pridaj ResetGame() do GameEngine
+                this.Invalidate();
+                return;
+            }
+
+            if (state == GameState.GameOver && e.KeyCode == Keys.Enter)
+            {
+                state = GameState.Playing;
+                engine.EngineReset();
+                this.Invalidate();
+                return;
+            }
             switch (e.KeyCode)
             {
                 case Keys.Down:
@@ -60,7 +108,11 @@ namespace Ttrs
                 case Keys.Up:
                     engine.RotateCCWIfPossible();
                     break;
+                case Keys.Space:
+                    engine.DropBlok();
+                    break;
             }
+            this.Invalidate();
         }
 
     }

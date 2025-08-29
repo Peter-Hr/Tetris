@@ -95,5 +95,24 @@
                 PlaceBlok();
             }
         }
+        public void DropBlok()
+        {
+            while (BlokFits()) { CurrentBlok.Move(1, 0); }
+            CurrentBlok.Move(-1, 0);
+            PlaceBlok();
+        }
+        public int GetTtlScore()
+        {
+            return GameSpace.TotalScore;
+        }
+        public void EngineReset()
+        {
+            GameSpace.TotalScore = 0;
+            GameOver = false;
+            GameSpace.gridReset();
+            CurrentBlok = BlokSystem.GiveBlokGenNew();
+        }
+            
+
     }
 }
