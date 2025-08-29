@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Blok.cs" />
     <Compile Include="BlokSystem.cs" />
+    <Compile Include="CheatinBox.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

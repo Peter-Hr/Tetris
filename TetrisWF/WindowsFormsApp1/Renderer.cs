@@ -7,6 +7,8 @@ namespace Ttrs
     internal class Renderer
     {
         private readonly GameEngine engine;
+        private readonly CheatinBox cheatinBox;
+        public bool Cheating { get; set; }
 
         private static readonly Color[] blockColors = new Color[]
         {
@@ -23,7 +25,9 @@ namespace Ttrs
         public Renderer(GameEngine engine)
         {
             this.engine = engine;
-        }   
+            cheatinBox = new CheatinBox(engine, blockColors);
+        }
+       
         public void Draw(Graphics g, Size clientSize)
         {
             int cellWidth = clientSize.Width / engine.GameSpace.Columns;
@@ -64,6 +68,12 @@ namespace Ttrs
                     DrawCell(g, pos.RowOffset, pos.ColumnOffset, blockColors[engine.CurrentBlok.Id], offsetX,offsetY, cellSize);
                 }
             }
+            if (Cheating && engine.BlokSystem.NextBlok != null)
+            {
+                cheatinBox.drawCheatingBox(g,cellSize, offsetX, offsetY, ttrsWidth, ttrsHeight);
+            }
+
+
         }
         private void DrawCell(Graphics g, int row, int col, Color color, int ofsetX, int ofsetY, int cellSize)
         {

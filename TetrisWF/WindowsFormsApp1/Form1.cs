@@ -79,17 +79,27 @@ namespace Ttrs
         private void MoveFunction(object sender, KeyEventArgs e)
 
         {
-            if (state == GameState.MainMenu && e.KeyCode == Keys.Enter)
+            if (state == GameState.MainMenu)
             {
-                state = GameState.Playing;
-                engine.EngineReset(); // pridaj ResetGame() do GameEngine
-                this.Invalidate();
-                return;
+                if (e.KeyCode == Keys.Enter)
+                {
+                    state = GameState.Playing;
+                    engine.EngineReset(); 
+                    renderer.Cheating = mainMenu.Cheating;
+                    this.Invalidate();
+                    return;
+                }
+                if(e.KeyCode == Keys.C)
+                {
+                    mainMenu.ToggleCheating();
+                    this.Invalidate();
+                    return;
+                }
             }
 
             if (state == GameState.GameOver && e.KeyCode == Keys.Enter)
             {
-                state = GameState.Playing;
+                state = GameState.MainMenu;
                 engine.EngineReset();
                 this.Invalidate();
                 return;
