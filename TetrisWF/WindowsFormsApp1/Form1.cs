@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.AxHost;
+﻿using System.Windows.Forms;
 
 namespace Ttrs
 
@@ -25,6 +16,7 @@ namespace Ttrs
             GameOver
         }
         private GameState state;
+        private Timer gameTimer;
 
         public Form1()
         {
@@ -41,18 +33,32 @@ namespace Ttrs
 
             state = GameState.MainMenu;
 
-            var timer = new Timer();
-            timer.Interval = 500;
-            timer.Tick += (s, e) =>
+            gameTimer = new Timer();
+            gameTimer.Interval = 500;
+            gameTimer.Tick += (s, e) =>
             {
                 if (state == GameState.Playing && !engine.GameOver)
                 {
                     engine.MoveBlokDown();
                     this.Invalidate();
+                    AdjustSpeed();
                 }
             };
-            timer.Start();
+            gameTimer.Start();
         }
+        private void AdjustSpeed()
+        {
+            int score = engine.GetTtlScore();
+
+            int newInterval = 500 - (score / 100) * 50;
+
+            if (newInterval < 100)
+                newInterval = 100;
+
+            if (gameTimer.Interval != newInterval)
+                gameTimer.Interval = newInterval;
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -72,7 +78,7 @@ namespace Ttrs
             }
             else if (state == GameState.GameOver)
             {
-                gameOverScreen.Draw(e.Graphics, this.ClientSize);
+                gameOverScreen.Draw(e.Graphics, this.ClientSize, engine.GetTtlScore().ToString());
                 this.Invalidate();
             }
         }
@@ -104,23 +110,27 @@ namespace Ttrs
                 this.Invalidate();
                 return;
             }
-            switch (e.KeyCode)
+            if (state == GameState.Playing)
             {
-                case Keys.Down:
-                    engine.RotateCWIfPossible();
-                    break;
-                case Keys.Left:
-                    engine.MoveLeftIfPossible();
-                    break;
-                case Keys.Right:
-                    engine.MoveRightIfPossible();
-                    break;
-                case Keys.Up:
-                    engine.RotateCCWIfPossible();
-                    break;
-                case Keys.Space:
-                    engine.DropBlok();
-                    break;
+
+                switch (e.KeyCode)
+                {
+                    case Keys.Down:
+                        engine.RotateCWIfPossible();
+                        break;
+                    case Keys.Left:
+                        engine.MoveLeftIfPossible();
+                        break;
+                    case Keys.Right:
+                        engine.MoveRightIfPossible();
+                        break;
+                    case Keys.Up:
+                        engine.RotateCCWIfPossible();
+                        break;
+                    case Keys.Space:
+                        engine.DropBlok();
+                        break;
+                }
             }
             this.Invalidate();
         }

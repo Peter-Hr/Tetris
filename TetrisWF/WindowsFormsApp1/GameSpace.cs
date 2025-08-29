@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Ttrs
+﻿namespace Ttrs
 {
     public class GameSpace
     {

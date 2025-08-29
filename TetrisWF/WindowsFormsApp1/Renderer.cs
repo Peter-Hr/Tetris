@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms.VisualStyles;
 
 namespace Ttrs
 {
@@ -72,6 +71,20 @@ namespace Ttrs
             {
                 cheatinBox.drawCheatingBox(g,cellSize, offsetX, offsetY, ttrsWidth, ttrsHeight);
             }
+            int score = engine.GetTtlScore();
+            string title = $"Score: {score}";
+            float fontSize = Math.Min(clientSize.Width, clientSize.Height) * 0.05f;
+            if (fontSize < 12) fontSize = 12;
+            using (var titleFont = new Font("Arial", fontSize, FontStyle.Bold))
+            using (var brushPurple = new SolidBrush(Color.Purple))
+            {
+                var titleSize = g.MeasureString(title, titleFont);
+                float x = offsetX + ttrsWidth + 20;
+                float y = offsetY + (ttrsHeight - titleSize.Height) / 2 - 4 *cellSize;
+                g.DrawString(title, titleFont, brushPurple,
+                            x,y);
+            }
+
 
 
         }

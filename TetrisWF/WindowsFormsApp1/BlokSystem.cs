@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace Ttrs
 {
     public class BlokSystem
