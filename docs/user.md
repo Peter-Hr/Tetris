@@ -1,7 +1,7 @@
 # Uživatelská dokumentace
 * Hra je spustitelná pomocou exe, prípadne dotnet run.
-* Prostredie je kompletne ovládané klávesnicou.
-* Hra je ovládaná šipkami.
+* **Prostredie** je kompletne **ovládané klávesnicou**.
+* **Hra** je **ovládaná šipkami**.
 * Hra začína start screenom, na ktorom sa dá zadať meno  -  **stlačením tlačidla +** začíname zadávať naše meno meno ukladáme **stlačením tlačidla +**, zobraziť leaderboard **stlačením tlačidla L**, z leaderboardu sa dostávame spať **stlačením tlačidla ESC**, zapnúť / vypnúť cheaty **stlačením tlačidla C**.
 Leaderboard sa ukládá, takže, keď si hráč zadá svoje meno, môže si vylepšovať a ukladať svoje score.
 Pri **stlačení tlačidla ENTER** sa mení scéna a začínam nám bežať hlavná časť - Tetris.
