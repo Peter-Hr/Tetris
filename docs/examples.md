@@ -1,3 +1,6 @@
 # Ukázky použití
+## Ukážky startscreen
+* First start
+![Alt text](docs/Mainmenu_screen_bez_mena.png "First start")
 
-*Sem dejte několik příkladů, jak se váš program používá (abych si je při jeho kontrole nemusel vymýšlet já). Například pokud váš program potřebuje nějaký vstupní soubor s daty, dejte sem ukázkový soubor.*
+
