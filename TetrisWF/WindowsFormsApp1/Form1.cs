@@ -88,6 +88,7 @@ namespace Ttrs
             else if (state == GameState.Leaderboard)
             {
                 leaderboard.Draw(e.Graphics, this.ClientSize);
+                this.Invalidate();
             }
         }
         private void MoveFunction(object sender, KeyEventArgs e)

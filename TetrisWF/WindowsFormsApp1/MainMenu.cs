@@ -10,6 +10,7 @@ namespace Ttrs
         public bool enteringName { get; private set; }
 
 
+
         public void ToggleCheating()
         {
             Cheating = !Cheating;
