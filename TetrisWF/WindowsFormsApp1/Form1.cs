@@ -9,11 +9,13 @@ namespace Ttrs
         private readonly Renderer renderer;
         private readonly MainMenu mainMenu;
         private readonly GameOverScreen gameOverScreen;
+        private readonly Leaderboard leaderboard;
         public enum GameState
         {
             MainMenu,
             Playing,
-            GameOver
+            GameOver,
+            Leaderboard
         }
         private GameState state;
         private Timer gameTimer;
@@ -25,7 +27,8 @@ namespace Ttrs
             renderer = new Renderer(engine);
             mainMenu = new MainMenu();
             gameOverScreen = new GameOverScreen();
-            
+            leaderboard = new Leaderboard();
+
             this.DoubleBuffered = true;
             this.KeyPreview = true;
             this.KeyDown += MoveFunction;
@@ -79,7 +82,12 @@ namespace Ttrs
             else if (state == GameState.GameOver)
             {
                 gameOverScreen.Draw(e.Graphics, this.ClientSize, engine.GetTtlScore().ToString());
+                leaderboard.AddScore(mainMenu.PlayerName, engine.GetTtlScore());
                 this.Invalidate();
+            }
+            else if (state == GameState.Leaderboard)
+            {
+                leaderboard.Draw(e.Graphics, this.ClientSize);
             }
         }
         private void MoveFunction(object sender, KeyEventArgs e)
@@ -87,26 +95,39 @@ namespace Ttrs
         {
             if (state == GameState.MainMenu)
             {
-                if (e.KeyCode == Keys.Enter)
+                if (!mainMenu.enteringName)
                 {
-                    state = GameState.Playing;
-                    engine.EngineReset(); 
-                    renderer.Cheating = mainMenu.Cheating;
-                    this.Invalidate();
-                    return;
+                    if(e.KeyCode == Keys.Enter)
+                    {
+                        state = GameState.Playing;
+                        engine.EngineReset();
+                        renderer.Cheating = mainMenu.Cheating;
+                        this.Invalidate();
+                        return;
+
+                    }
+                    if (e.KeyCode == Keys.L)
+                    {
+                        state = GameState.Leaderboard;
+                        this.Invalidate();
+                        return;
+                    }
                 }
-                if(e.KeyCode == Keys.C)
-                {
-                    mainMenu.ToggleCheating();
-                    this.Invalidate();
-                    return;
-                }
+                mainMenu.HandleKey(e.KeyCode);
+                this.Invalidate();
+                return;
             }
 
             if (state == GameState.GameOver && e.KeyCode == Keys.Enter)
             {
                 state = GameState.MainMenu;
                 engine.EngineReset();
+                this.Invalidate();
+                return;
+            }
+            if (state == GameState.Leaderboard && e.KeyCode == Keys.Escape)
+            {
+                state = GameState.MainMenu;
                 this.Invalidate();
                 return;
             }

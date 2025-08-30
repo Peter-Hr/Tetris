@@ -61,6 +61,7 @@
     <Compile Include="IBlok.cs" />
     <Compile Include="JBlok.cs" />
     <Compile Include="LBlok.cs" />
+    <Compile Include="LeaderBoard.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="OBlok.cs" />
     <Compile Include="Pos.cs" />
