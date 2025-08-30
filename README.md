@@ -6,7 +6,7 @@
 Hra je kompletne ovládaná klávesnicou.
 Hra začína start screenom, na ktorom sa dá zadať meno, zobraziť leaderboard, zapnúť cheaty.
 Leaderboard sa ukládá, takže, keď si hráč zadá svoje meno, môže si vylepšovať a ukladať svoje score.
-Pri stlačení ENTER sa mení scéna a začínam nám bežať hlavná čas - Tetris.
+Pri stlačení ENTER sa mení scéna a začínam nám bežať hlavná časť - Tetris.
 Generujú sa nám náhodné bloky, ktoré začínajú padať smerom dole, rýchlosť ktorou padajú je závislá na výške score.
 Keď sa naplní akýkolvek riadok, tento riadok sa vyprázdni, pripočíta sa score a všetky riadky nad ním spadnú dole.
 Generované bloki môže užívateľ rotovat, pohybovať doľava - doprava a prípadne ich len hned zhodit dole.
