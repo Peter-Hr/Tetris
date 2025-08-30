@@ -12,7 +12,7 @@
 * Game without cheating
 ![Alt text](docs/Hra_s_cheating_off.png "Without cheating")
 * Game with cheating
-![Alt text](docs/docs/Hra_s_cheating_on.png "With cheating")
+![Alt text](docs/Hra_s_cheating_on.png "With cheating")
 ## Ukažka gameover screen
 ![Alt text](docs/Gameover_screen.png "Gameover")
 
