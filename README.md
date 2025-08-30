@@ -1,10 +1,19 @@
-# Zápočtový program: *název vašeho programu*
+# Zápočtový program: Tetris - WinFormApp
 
-*Tento soubor slouží jako šablona. Vhodně ho upravte podle vašeho projektu. Text psaný kurzívou obsahuje instrukce pro vás – před odevzdáním je prosím odstraňte nebo nahraďte vlastním textem.*
+
 
 ## Specifikace
+Hra je kompletne ovládaná klávesnicou.
+Hra začína start screenom, na ktorom sa dá zadať meno, zobraziť leaderboard, zapnúť cheaty.
+Leaderboard sa ukládá, takže, keď si hráč zadá svoje meno, môže si vylepšovať a ukladať svoje score.
+Pri stlačení ENTER sa mení scéna a začínam nám bežať hlavná čas - Tetris.
+Generujú sa nám náhodné bloky, ktoré začínajú padať smerom dole, rýchlosť ktorou padajú je závislá na výške score.
+Keď sa naplní akýkolvek riadok, tento riadok sa vyprázdni, pripočíta sa score a všetky riadky nad ním spadnú dole.
+Generované bloki môže užívateľ rotovat, pohybovať doľava - doprava a prípadne ich len hned zhodit dole.
+Pri zapnutí cheatov užívateľ vidí aký budúci blok.
+Užívatel stále vidí svoje aktualne skóre.
+Pri prehre - akýkolvek položený blok, ktorý sa dotýka horných dvoch riadkov, sa spúšta GameOver screen na ktorom vidíme naše score a po stlačení ENTER nás to posiela spať na start screen, kde si môžeme upravit / nechať naše meno a hrať ďalej.
 
-*Sem napište stručnou specifikaci vašeho programu – co váš program má dělat (podobně jako jste mi psali do mailu). Stačí zhruba 1–2 odstavce.*
 
 ## *Doporučená struktura projektu*
 
@@ -14,13 +23,10 @@
 
 ## Instalace a spuštění
 
-*Pokud je váš program v C#, stačí upravit JMENO_PROJEKTU níže a případně doplnit další informace ke spuštění (jestli má nějaké parametry, vstupní soubory, ...). Pokud je parametrů hodně nebo je potřeba nějaký speciální formát vstupních souborů, nechte tuto sekci jen stručnou a podrobněji to popište v uživatelské dokumentaci (a sem dejte odkaz). Pokud je program v jiném programovacím jazyce nebo pro spuštění vyžaduje instalaci nějakých knihoven či nástrojů, tuto sekci vhodně upravte, abych byl při kontrole schopen nainstalovat si vše potřebné a program spustit.*
-
 Pro spuštění přejděte do složky `JMENO_PROJEKTU` a spusťte příkaz `dotnet run`.
+Pre spustenie som pridal ešte zip, kde sa nachádza exe a leaderboard.txt, oba musia byť v rovnakom adresári pre správne fungovanie.
 
 ## Dokumentace
-
-*Tady bude rozcestník k dokumentaci k vašemu programu. Pokud je to potřeba, upravte odkazy na soubory s dokumentací. Pokud dokumentaci nepíšete v Markdownu, uveďte zde, kde ji najdu (např. odkaz na PDF soubor).*
 
 * [Uživatelská dokumentace](docs/user.md)
 * [Ukázky použití](docs/examples.md)
