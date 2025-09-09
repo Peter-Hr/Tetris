@@ -70,3 +70,12 @@ aktuálny blok (ten sa kreslí zvlášť), obsah GameSpace.grid (nakreslenie her
 
 ### GameOverScreen
 * Jednoduché vykreslenie obrazovky Game Over + skóre
+
+# Reprezentácia dát 
+### Bloky
+* V pohybe sú uložené ako objekt (CurrentBlook) v **GameEngine**
+* Po dopade za ich dlaždice zapíšu do GameSpace.grid
+
+### Herná plocha
+* GameSpace.grid obsahuje položené bloky a prázdne bolky, sú reprezentované čislom, 0 = prázny, !0 = plný
+*Renderer kreslí plochu tak, že: vykreslí celé GameSpace.grid, navrch ešte aktuálny pohybujúci sa blok.
