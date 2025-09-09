@@ -78,4 +78,4 @@ aktuálny blok (ten sa kreslí zvlášť), obsah GameSpace.grid (nakreslenie her
 
 ### Herná plocha
 * GameSpace.grid obsahuje položené bloky a prázdne bolky, sú reprezentované čislom, 0 = prázny, !0 = plný
-*Renderer kreslí plochu tak, že: vykreslí celé GameSpace.grid, navrch ešte aktuálny pohybujúci sa blok.
+* Renderer kreslí plochu tak, že: vykreslí celé GameSpace.grid, navrch ešte aktuálny pohybujúci sa blok.
