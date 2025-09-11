@@ -6,7 +6,7 @@
         public int Rows { get; }
         public int Columns { get; }
         public int TotalScore = 0;
-
+        //herné pole uložene ako 2d zoznam, ak je na [x,y] 0 tak tam blok nie je.
         public GameSpace(int rows, int columns)
         {
             Rows = rows;

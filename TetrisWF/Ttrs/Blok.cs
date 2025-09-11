@@ -8,6 +8,7 @@ namespace Ttrs
         protected abstract Pos StartOffset { get; }
         public abstract int Id { get; }
         private int rotationState;
+        // rotation state ulozeny ako int, pretoze každý stav, má uložene konkrétne bloky ktoré má vypľnať
         private Pos offset;
 
         public Blok()

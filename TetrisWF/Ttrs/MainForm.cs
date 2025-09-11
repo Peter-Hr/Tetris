@@ -10,6 +10,7 @@ namespace Ttrs
         private readonly MainMenu mainMenu;
         private readonly GameOverScreen gameOverScreen;
         private readonly Leaderboard leaderboard;
+        //stavy pouzité aby sme vedeli, čo sa má vykreslovať
         public enum GameState
         {
             MainMenu,
@@ -35,7 +36,7 @@ namespace Ttrs
             this.FormBorderStyle = FormBorderStyle.Sizable;
 
             state = GameState.MainMenu;
-
+            //rýchlost, ktorá sa súmerne zo skore zvysuje
             gameTimer = new Timer();
             gameTimer.Interval = 500;
             gameTimer.Tick += (s, e) =>

@@ -26,6 +26,7 @@ namespace Ttrs
         }
         public Blok GiveBlokGenNew()
         {
+            //funkcia odovzdá blok a rovno vyrobí nový
             Blok blok = NextBlok;
             do
             {

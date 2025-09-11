@@ -32,7 +32,7 @@ namespace Ttrs
                 }
             }
         }
-
+        //ak mame vytvoreneho usera, ukladáme jeho vyssie skore, ak nie, zakladáme nové s jeho aktualnym
         private void Save()
         {
             var lines = scores.Select(kvp => $"{kvp.Key};{kvp.Value}");

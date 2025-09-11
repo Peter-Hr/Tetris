@@ -23,6 +23,7 @@
         }
         private bool BlokFits()
         {
+            //kontrola, ci sa blok zmesti do nového miesta
             foreach (Pos p in CurrentBlok.TilePos())
             {
                 if (!GameSpace.IsCellEmpty(p.RowOffset, p.ColumnOffset))
