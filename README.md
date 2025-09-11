@@ -14,13 +14,6 @@ Pri zapnutí cheatov užívateľ vidí aký budúci blok.
 Užívatel stále vidí svoje aktualne skóre.
 Pri prehre - akýkolvek položený blok, ktorý sa dotýka horných dvoch riadkov, sa spúšta GameOver screen na ktorom vidíme naše score a po stlačení ENTER nás to posiela spať na start screen, kde si môžeme upravit / nechať naše meno a hrať ďalej.
 
-
-## *Doporučená struktura projektu*
-
-*Je vhodné v repozitáři oddělit zdrojové kódy vašeho programu od dokumentace (a případně testů, pokud je máte). Pro zdrojové kódy tedy vytvořte složku, v C# se nejčastěji pojmenovává podle jména projektu. Například pokud by se váš program jmenoval JMENO_PROJEKTU, tak budete mít složku `JMENO_PROJEKTU` a v ní `JMENO_PROJEKTU.csproj` a `Program.cs` a případně další `.cs` soubory.*
-
-*Pro dokumentaci je připravena složka `docs`, její obsah vhodně upravte.*
-
 ## Instalace a spuštění
 
 Pro spuštění přejděte do složky `JMENO_PROJEKTU` a spusťte příkaz `dotnet run`.
