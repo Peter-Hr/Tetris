@@ -3,7 +3,7 @@
 namespace Ttrs
 
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private readonly GameEngine engine;
         private readonly Renderer renderer;
@@ -20,7 +20,7 @@ namespace Ttrs
         private GameState state;
         private Timer gameTimer;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             engine = new GameEngine();
