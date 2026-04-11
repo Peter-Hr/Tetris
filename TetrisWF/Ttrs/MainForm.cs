@@ -1,10 +1,14 @@
-﻿using System.Windows.Forms;
+﻿using log4net;
+using System.Windows.Forms;
+
 
 namespace Ttrs
 
 {
+
     public partial class MainForm : Form
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MainForm));
         private readonly GameEngine engine;
         private readonly Renderer renderer;
         private readonly MainMenu mainMenu;
@@ -23,7 +27,10 @@ namespace Ttrs
 
         public MainForm()
         {
+
+            
             InitializeComponent();
+            Log.Info("Main form initialized");
             engine = new GameEngine();
             renderer = new Renderer(engine);
             mainMenu = new MainMenu();
@@ -36,6 +43,7 @@ namespace Ttrs
             this.FormBorderStyle = FormBorderStyle.Sizable;
 
             state = GameState.MainMenu;
+            Log.Info("Started MainMenu");
             //rýchlost, ktorá sa súmerne zo skore zvysuje
             gameTimer = new Timer();
             gameTimer.Interval = 500;
@@ -101,6 +109,7 @@ namespace Ttrs
                 {
                     if(e.KeyCode == Keys.Enter)
                     {
+                        Log.Info("Scene changed to playing");
                         state = GameState.Playing;
                         engine.EngineReset();
                         renderer.Cheating = mainMenu.Cheating;
@@ -110,6 +119,7 @@ namespace Ttrs
                     }
                     if (e.KeyCode == Keys.L)
                     {
+                        Log.Info("Scene changed to LeaderBoard");
                         state = GameState.Leaderboard;
                         this.Invalidate();
                         return;
@@ -122,6 +132,7 @@ namespace Ttrs
 
             if (state == GameState.GameOver && e.KeyCode == Keys.Enter)
             {
+                Log.Info("Scene changed to MainMenu");
                 state = GameState.MainMenu;
                 engine.EngineReset();
                 this.Invalidate();
@@ -129,6 +140,7 @@ namespace Ttrs
             }
             if (state == GameState.Leaderboard && e.KeyCode == Keys.Escape)
             {
+                Log.Info("Scene changed to MainMenu");
                 state = GameState.MainMenu;
                 this.Invalidate();
                 return;

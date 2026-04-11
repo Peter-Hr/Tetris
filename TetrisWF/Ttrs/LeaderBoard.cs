@@ -3,56 +3,107 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using log4net;
 
 namespace Ttrs
 {
     internal class Leaderboard
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Leaderboard));
+
         private readonly string filePath = "LeaderBoard.txt";
         private readonly Dictionary<string, int> scores = new Dictionary<string, int>();
 
-
         public Leaderboard()
         {
+            Log.Info("Initializing leaderboard");
             Load();
         }
 
         private void Load()
         {
             scores.Clear();
-            if (!File.Exists(filePath))
-                return;
 
-            foreach (var line in File.ReadAllLines(filePath))
+            if (!File.Exists(filePath))
             {
-                var parts = line.Split(';');
-                if (parts.Length == 2 && int.TryParse(parts[1], out int score))
+                Log.Warn($"Leaderboard file not found: {filePath}");
+                return;
+            }
+
+            try
+            {
+                foreach (var line in File.ReadAllLines(filePath))
                 {
-                    scores[parts[0]] = score;
+                    var parts = line.Split(';');
+                    if (parts.Length == 2 && int.TryParse(parts[1], out int score))
+                    {
+                        scores[parts[0]] = score;
+                    }
+                    else
+                    {
+                        Log.Warn($"Invalid leaderboard line format: {line}");
+                    }
                 }
+
+                Log.Info($"Leaderboard loaded successfully ({scores.Count} records)");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Failed to load leaderboard", ex);
             }
         }
-        //ak mame vytvoreneho usera, ukladáme jeho vyssie skore, ak nie, zakladáme nové s jeho aktualnym
+
         private void Save()
         {
-            var lines = scores.Select(kvp => $"{kvp.Key};{kvp.Value}");
-            File.WriteAllLines(filePath, lines);
+            try
+            {
+                var lines = scores.Select(kvp => $"{kvp.Key};{kvp.Value}");
+                File.WriteAllLines(filePath, lines);
+                Log.Info($"Leaderboard saved ({scores.Count} records)");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Failed to save leaderboard", ex);
+            }
         }
 
         public void AddScore(string name, int score)
         {
-            if (string.IsNullOrWhiteSpace(name)) return;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Log.Warn("Attempted to add score with empty name");
+                return;
+            }
 
-            if (scores.TryGetValue(name, out int oldScore))
+            bool changed = false;
+
+            try
             {
-                if (score > oldScore)
+                if (scores.TryGetValue(name, out int oldScore))
+                {
+                    if (score > oldScore)
+                    {
+                        scores[name] = score;
+                        changed = true;
+                        Log.Info($"Updated score for {name}: {oldScore} -> {score}");
+                    }
+                }
+                else
+                {
                     scores[name] = score;
+                    changed = true;
+                    Log.Info($"New player added: {name} with score {score}");
+                }
+
+                if (changed)
+                {
+                    Save();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                scores[name] = score;
+                Log.Error("Error while adding score", ex);
             }
-            Save();
         }
 
         public void Draw(Graphics g, Size clientSize)
@@ -63,12 +114,10 @@ namespace Ttrs
             using (var entryFont = new Font("Arial", 16))
             using (var brush = new SolidBrush(Color.White))
             {
-
                 string title = "LEADERBOARD";
                 var titleSize = g.MeasureString(title, titleFont);
                 g.DrawString(title, titleFont, brush,
                     (clientSize.Width - titleSize.Width) / 2, 50);
-
 
                 var ordered = scores.OrderByDescending(kvp => kvp.Value).Take(10).ToList();
 
@@ -86,7 +135,6 @@ namespace Ttrs
                     (clientSize.Width - backSize.Width) / 2,
                     clientSize.Height - 60);
             }
-
         }
     }
 }

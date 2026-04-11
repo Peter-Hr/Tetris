@@ -1,10 +1,13 @@
-﻿using System.Drawing;
+﻿using log4net;
+using System.Drawing;
 using System.Windows.Forms;
+
 
 namespace Ttrs
 {
     internal class MainMenu
     {
+        private static readonly ILog Log = LogManager.GetLogger(typeof(GameEngine));
         public bool Cheating { get; private set; }
         public string PlayerName { get; private set; } = "";
         public bool enteringName { get; private set; }
@@ -17,12 +20,14 @@ namespace Ttrs
         }
         public void StartEnteringName()
         {
+            Log.Info("Started entering name");
             enteringName = true;
             PlayerName = "";
         }
 
         public void StopEnteringName()
         {
+            Log.Info("Stopped entering name");
             enteringName = false;
         }
         public void HandleKey(Keys key)
@@ -54,6 +59,7 @@ namespace Ttrs
         }
         public void Draw(Graphics g, Size clientSize)
         {
+      
             string title = "TETRIS";
             string subtitle = "Press ENTER to start";
             string cheatText = $"Cheating: {(Cheating ? "ON" : "OFF")} (Press C to toggle)";
